@@ -1,6 +1,8 @@
-package ar.edu.unlpam.ing.TP;
+package ar.edu.unlpam.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import ar.edu.unlpam.ing.TP.Conversor;
 
 import java.util.HashMap;
 import java.util.Map;
