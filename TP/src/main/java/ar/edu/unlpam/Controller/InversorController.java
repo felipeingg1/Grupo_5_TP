@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class InversorController {
 
     @GetMapping("/invertir/{cadena}")
-    public Map<String, String> CTF(@PathVariable String cadena){
+    public Map<String, String> invertir(@PathVariable String cadena){
         CadenaInvertida x = new CadenaInvertida();
         String invertida = x.invertir(cadena);
 
