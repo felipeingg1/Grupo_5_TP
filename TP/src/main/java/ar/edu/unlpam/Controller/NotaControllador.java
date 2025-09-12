@@ -1,7 +1,5 @@
 package ar.edu.unlpam.Controller;
 import ar.edu.unlpam.ing.TP.Nota;
-import ar.edu.unlpam.ing.TP.NotaRequest;
-
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,14 +25,17 @@ public class NotaControllador {
     }
 
     @PostMapping("/notas")
-    public ArrayList<Nota> addNota(@RequestBody String nota){
-        Nota nuevaNota = new Nota((notas.size()+1), "Nota "+(notas.size()+1), nota, LocalDateTime.now().toString());
+    public ArrayList<Nota> addNota(@RequestBody Nota nota){
+        String titulo=nota.getTitulo();
+        titulo= titulo.isEmpty() ? "Sin Titulo" : titulo;
+
+        Nota nuevaNota = new Nota((notas.size()+1), titulo, nota.getContenido(), LocalDateTime.now().toString());
         notas.add(nuevaNota);
         return notas;
     }
 
     @PutMapping("/notas/{id}")
-    public Nota updateNota(@PathVariable int id, @RequestBody NotaRequest request) {
+    public Nota updateNota(@PathVariable int id, @RequestBody Nota request) {
     
         for (Nota n : notas) {
         if (n.getID() == id) {

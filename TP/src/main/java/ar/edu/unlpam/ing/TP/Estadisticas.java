@@ -1,6 +1,9 @@
 package ar.edu.unlpam.ing.TP;
 
 public class Estadisticas {
+    private double[] numeros;
+    
+    public double[] getNumeros() { return numeros;}
 
     public double promedio(double[] numeros){
         double suma=0;

@@ -3,7 +3,6 @@ package ar.edu.unlpam.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unlpam.ing.TP.Estadisticas;
-import ar.edu.unlpam.ing.TP.NumerosRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class EstadisticasController {
 
 @PostMapping("/estadisticas")
-public Map<String, Object> estadisticas(@RequestBody NumerosRequest request){
+public Map<String, Object> estadisticas(@RequestBody Estadisticas request){
     double[] cadena = request.getNumeros();
     Estadisticas e = new Estadisticas();
     
