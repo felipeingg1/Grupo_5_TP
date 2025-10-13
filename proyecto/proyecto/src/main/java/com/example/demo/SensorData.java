@@ -19,11 +19,13 @@ public class SensorData {
     public int getId() {
         return id;
     }
-    
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setValue(double value) {
+        this.value = value;
+    }
     public double getValue() {
-    
-        java.util.Random random = new java.util.Random();
-        value = random.nextDouble() * 100;
         return value;
     }
     public String getAlerta(){

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 public class SensorDataController {
@@ -17,7 +16,7 @@ public class SensorDataController {
     }
 
     @GetMapping("/sensors/all")
-    public List<Integer> getAllSensors() {
+    public HashMap<String, Object> getAllSensors() {
         return sensorDataService.getAll();
     }
 
