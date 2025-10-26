@@ -1,12 +1,15 @@
 package com.example.demo;
 
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class SensorDataService {
+    private static final Logger registralog = LoggerFactory.getLogger(SensorDataService.class);
 
     private final SensorDataDAO dao;
     private final List<SensorData> sensores;
@@ -20,6 +23,7 @@ public class SensorDataService {
     }
 
     public HashMap<String, Object> getAll() {
+        registralog.info("Obteniendo datos de todos los sensores");
         HashMap<String, Object> reporte = new HashMap<>();
         fachada.getTemp();
         Map<Integer, String> sensorIds = dao.getAll();
@@ -37,25 +41,32 @@ public class SensorDataService {
             }
         }
         reporte.put("cantidad", cantidad);
+        registralog.debug("Total de sensores activos: {}", cantidad);
         return reporte;
     }
 
     public HashMap<String, Object> idData(int id) {
+        registralog.info("Consultando datos del sensor ID: {}", id);
         HashMap<String, Object> reporte = new HashMap<>();
         if (id == 0) {
+            registralog.warn("ID inválido recibido: {}", id);
             reporte.put("error", "ID invalido");
+            return reporte;
         }
 
         fachada.getTemp();
 
         for (SensorData sensor : sensores) {
             if (sensor.getId() == id) {
+                registralog.debug("Sensor encontrado - ID: {}, Valor: {}, Alerta: {}",
+                        sensor.getId(), sensor.getValue(), sensor.getAlerta());
                 reporte.put("id", sensor.getId());
                 reporte.put("valor", sensor.getValue());
                 reporte.put("alerta", sensor.getAlerta());
                 return reporte;
             }
         }
+        registralog.warn("Sensor no encontrado con ID: {}", id);
         reporte.put("error", "Sensor no encontrado");
 
         return reporte;

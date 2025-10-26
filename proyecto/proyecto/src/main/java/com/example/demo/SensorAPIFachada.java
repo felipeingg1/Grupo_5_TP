@@ -8,8 +8,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SensorAPIFachada {
+    private static final Logger registralog = LoggerFactory.getLogger(SensorAPIFachada.class);
+
     private String token;
     private final SensorDataDAO dao;
     private final List<SensorData> sensores;
@@ -44,7 +48,7 @@ public class SensorAPIFachada {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-
+                registralog.info("JSON recibido de getTemp: {}", response.body());
                 JSONObject jsonResponse = new JSONObject(response.body());
 
                 int contador = 0;
@@ -52,6 +56,10 @@ public class SensorAPIFachada {
                     String addressHex = jsonResponse.optString("dir" + (contador + 1), "0x0");
                     int id = jsonResponse.optInt("n" + (contador + 1), -1);
                     double temp = jsonResponse.optDouble("t" + (contador + 1), Double.NaN);
+
+                    registralog.debug("Sensor {} - ID: {}, Address: {}, Temp: {}",
+                            (contador + 1), id, addressHex, temp);
+
                     sensor.setAddress(addressHex);
                     sensor.setId(id);
                     sensor.setValue(temp);
@@ -106,6 +114,7 @@ public class SensorAPIFachada {
 
     public String Login() {
         try {
+            registralog.info("Intentando hacer login en el dispositivo IoT");
             String url = "http://mofi4016.local/checkLogin";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("username", "user");
@@ -127,12 +136,14 @@ public class SensorAPIFachada {
             if (response.statusCode() == 200) {
                 JSONObject jsonResponse = new JSONObject(response.body());
                 this.token = jsonResponse.getString("token");
+                registralog.info("Login exitoso. Token obtenido");
                 return this.token;
             } else {
+                registralog.error("Login fallido. Status code: {}", response.statusCode());
                 return null;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            registralog.error("Error en Login: {}", e.getMessage(), e);
             return null;
         }
     }
