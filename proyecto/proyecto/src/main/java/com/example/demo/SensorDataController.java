@@ -29,4 +29,17 @@ public class SensorDataController {
     public HashMap<String, Object> getHistoricReport() {
         return sensorDataService.historicReport();
     }
+
+    @GetMapping("/sensors/{addres}/{id}")
+    public String setID_state(@PathVariable String addres, @PathVariable int id) {
+        return sensorDataService.setID_state(addres, id);
+
+    }
+
+    @GetMapping("/sensors/{id}/{umbral_alto}/{umbral_bajo}")
+    public String setID_state(@PathVariable String addres, @PathVariable int id, @PathVariable double umbral_alto,
+            @PathVariable double umbral_bajo) {
+        return sensorDataService.setUmbrales(id, umbral_alto, umbral_bajo);
+
+    }
 }
