@@ -120,7 +120,8 @@ public class SensorDataService {
         for (SensorData sensor : sensores) {
             if (sensor.getId() == id) {
                 sensor.setUmbrales(umbralAlto, umbralBajo);
-                return "Umbrales actualizados para el sensor con ID " + id;
+                String alerta= sensor.getAlerta();
+                return "Umbrales actualizados para el sensor con ID " + id + ". Alerta actual: " + alerta;
             }
         }
         return "Sensor con ID " + id + " no encontrado.";

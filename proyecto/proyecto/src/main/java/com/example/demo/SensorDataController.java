@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -30,16 +31,14 @@ public class SensorDataController {
         return sensorDataService.historicReport();
     }
 
-    @GetMapping("/sensors/{addres}/{id}")
+    @PutMapping("/sensors/{addres}/{id}")
     public String setID_state(@PathVariable String addres, @PathVariable int id) {
-        return sensorDataService.setID_state(addres, id);
+    return sensorDataService.setID_state(addres, id);
+}
 
-    }
-
-    @GetMapping("/sensors/{id}/{umbral_alto}/{umbral_bajo}")
-    public String setID_state(@PathVariable String addres, @PathVariable int id, @PathVariable double umbral_alto,
-            @PathVariable double umbral_bajo) {
-        return sensorDataService.setUmbrales(id, umbral_alto, umbral_bajo);
-
-    }
+    @PutMapping("/sensors/{id}/{umbral_alto}/{umbral_bajo}")
+    public String setUmbrales(@PathVariable int id, @PathVariable double umbral_alto,
+        @PathVariable double umbral_bajo) {
+    return sensorDataService.setUmbrales(id, umbral_alto, umbral_bajo);
+}
 }
